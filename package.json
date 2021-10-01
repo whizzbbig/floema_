@@ -1,0 +1,51 @@
+{
+  "name": "floema",
+  "version": "1.0.0",
+  "description": "A boilerplate which inspired from luis henrique bizzaro course on awwwards but intent to use latest and v5 techniques",
+  "scripts": {
+    "build": "webpack --progress --config webpack.config.build.js",
+    "development": "webpack serve --progress --config webpack.config.development.js",
+    "start": "npm run development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whizzbbig/Webpack-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "whizzbbig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whizzbbig/Webpack-boilerplate/issues"
+  },
+  "homepage": "https://github.com/whizzbbig/Webpack-boilerplate#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-webpack-plugin": "^3.0.1",
+    "glslify-loader": "^2.0.0",
+    "image-minimizer-webpack-plugin": "^2.2.0",
+    "imagemin": "^8.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^10.0.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "postcss-loader": "^6.1.1",
+    "sass": "^1.42.1",
+    "sass-loader": "^12.1.0",
+    "terser-webpack-plugin": "^5.2.4",
+    "webpack": "^5.55.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.0",
+    "webpack-merge": "^5.8.0"
+  }
+}

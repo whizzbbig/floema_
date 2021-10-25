@@ -1,0 +1,14 @@
+block variables
+doctype html
+html(lang="en")
+  head
+    include head
+  body
+    include preloader
+    include navigation
+
+    #content.content(data-template=template)
+    block content
+      span no content provided
+
+    include scripts

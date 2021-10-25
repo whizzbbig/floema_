@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "A boilerplate which inspired from luis henrique bizzaro course on awwwards but intent to use latest and v5 techniques",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.build.js",
-    "development": "webpack serve --progress --config webpack.config.development.js",
-    "start": "npm run development"
+    "backend:build": "node app.js",
+    "backend:development": "nodemon app.js",
+    "frontend:build": "webpack --progress --config webpack.config.build.js",
+    "frontend:development": "webpack serve --progress --config webpack.config.development.js",
+    "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "@babel/core": "^7.15.5",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^6.3.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.3.0",
     "eslint": "^7.32.0",
@@ -39,6 +42,7 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^10.0.0",
     "mini-css-extract-plugin": "^2.3.0",
+    "nodemon": "^2.0.14",
     "postcss-loader": "^6.1.1",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
@@ -47,5 +51,9 @@
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.3.0",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
   }
 }

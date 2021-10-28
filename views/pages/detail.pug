@@ -1,7 +1,32 @@
 extends ../_includes/layout
 
 block variables
-    - var template = 'detail'
+  - var template = 'detail'
 
 block content 
-  h1.detail__title Detail
+  .detail
+    .detail__wrapper
+      figure.detail__media
+        img.detail__media__image(src=product.data.image.url alt=product.data.image.alt)
+
+    .detail__information
+      p.detail__information__collection=product.data.collection.data.title
+
+      h1.detail__information__title=product.data.title
+
+      .detail__information__content
+        .detail__information__highlights
+          each highlight in product.data.highlights
+            p.detail__information__highlight
+              svg.detail__information__highlight__icon
+                use(xlink:href=highlight.highlights_icon)
+
+              span.detail__information__highlight__text=highlight.highlights_text
+
+        .detail__information__list
+          each item in product.data.informations
+            p.detail__information__item
+              strong.detail__information__item__title=item.informations_label
+              span.detail__information__item__description=item.informations_description
+
+        a.detail__information__link(href=product.data.link_url.url target="_blank")=product.data.link_text

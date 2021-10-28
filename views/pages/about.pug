@@ -1,7 +1,44 @@
 extends ../_includes/layout
 
 block variables
-    - var template = 'about'
+  - var template = 'about'
 
 block content 
-  h1.about__title About
+  .about 
+    .about__wrapper
+      section.about__gallery
+        each media in about.data.gallery
+          figure.about__gallery__media
+            img.about__gallery__media__image(src=media.image.url alt=media.image.alt)
+
+      each section in about.data.body
+        if section.slice_type == 'title'
+          h2.about__title=section.primary.text
+
+        if section.slice_type == 'content'
+          section.about__content
+            .about__content__wrapper
+              p.about__content__label=section.primary.label
+
+              .about__content__description!=PrismicDOM.RichText.asHtml(section.primary.description)
+
+              figure.about__content__media
+                img.about__content__media__image(src=section.primary.image.url alt=section.primary.image.alt)
+
+        if section.slice_type == 'highlight'
+          section.about__highlight
+            .about__highlight__wrapper
+              if section.primary.label
+                p.about__highlight__label=section.primary.label
+
+              h3.about__highlight__title=section.primary.title
+
+              each media in section.items
+                figure.about__highlight__media
+                  img.about__highlight__media__image(src=media.image.url alt=media.image.alt)
+
+        if section.slice_type == 'gallery'
+          section.about__gallery
+            each media in section.items
+              figure.about__gallery__media
+                img.about__gallery__media__image(src=media.image.url alt=media.image.alt)

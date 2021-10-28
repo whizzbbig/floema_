@@ -1,0 +1,15 @@
+extends ../_includes/layout
+
+block variables
+  - var template = 'collections'
+
+block content 
+  .collections
+    .collections__wrapper
+      .collections__gallery
+        .collections__gallery__wrapper
+          each collection in collections
+            each product in collection.data.products
+              a.collections__gallery__link
+                figure.collections__gallery__media
+                  //- img.collections__gallery__media__image(src=product.products_product.data.image.url alt=product.products_product.data.alt)

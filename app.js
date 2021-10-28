@@ -10,7 +10,7 @@ const PrismicDOM = require('prismic-dom');
 
 // Initialize the prismic.io api
 const initApi = (req) => {
-  return Prismic.getApi(process.env.PRISMIC_ENDPOINT, {
+  return Prismic.client(process.env.PRISMIC_ENDPOINT, {
     accessToken: process.env.PRISMIC_ACCESS_TOKEN,
     req,
   });
@@ -45,32 +45,57 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.locals.basedir = app.get('views');
 
-app.get('/', (req, res) => {
-  res.render('pages/home');
-});
+app.get('/', async (req, res) => {
+  const api = await initApi(req);
 
-app.get('/about', (req, res) => {
-  initApi(req).then((api) => {
-    api
-      .query(Prismic.Predicates.any('document.type', ['meta', 'about']))
-      .then((response) => {
-        const { results } = response;
-        const [about, meta] = results;
-        console.log(about, meta);
-        res.render('pages/about', {
-          meta,
-          about,
-        });
-      });
+  const meta = await api.getSingle('meta');
+  const home = await api.getSingle('home');
+
+  res.render('pages/home', {
+    meta,
+    home,
   });
 });
 
-app.get('/detail/:uid', (req, res) => {
-  res.render('pages/detail');
+app.get('/about', async (req, res) => {
+  const api = await initApi(req);
+
+  const meta = await api.getSingle('meta');
+  const about = await api.getSingle('about');
+
+  res.render('pages/about', {
+    meta,
+    about,
+  });
 });
 
-app.get('/collection', (req, res) => {
-  res.render('pages/collection');
+app.get('/detail/:uid', async (req, res) => {
+  const api = await initApi(req);
+
+  const meta = await api.getSingle('meta');
+  const product = await api.getByUID('product', req.params.uid, {
+    fetchLinks: 'collection.title',
+  });
+
+  res.render('pages/detail', {
+    meta,
+    product,
+  });
+});
+
+app.get('/collections', async (req, res) => {
+  const api = await initApi(req);
+
+  const meta = await api.getSingle('meta');
+  const { results: collections } = await api.query(
+    Prismic.Predicates.at('document.type', 'collection'),
+    { fetchLinks: 'product.image' }
+  );
+
+  res.render('pages/collections', {
+    meta,
+    collections,
+  });
 });
 
 app.listen(port, () => {

@@ -6,10 +6,20 @@ block variables
 block content 
   .collections
     .collections__wrapper
+      .collections__titles
+        each collection, index in collections
+          .collections__titles__label=`${home.data.collection} ${Numbers(index)}`
+          .collections__titles__title=collection.data.title
       .collections__gallery
         .collections__gallery__wrapper
           each collection in collections
             each product in collection.data.products
-              a.collections__gallery__link
+              a.collections__gallery__link(href=Link(product.products_product))
                 figure.collections__gallery__media
-                  //- img.collections__gallery__media__image(src=product.products_product.data.image.url alt=product.products_product.data.alt)
+                  img.collections__gallery__media__image(src=product.products_product.data.image.url alt=product.products_product.data.image.alt)
+
+      .collections__content
+        each collection in collections
+          article.collections__article
+            h1.collections__article__title=`${collection.data.title} ${home.data.collection}`
+            p.collections__article__description=collection.data.description

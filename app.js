@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler());
 app.use(methodOverride());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize the prismic.io api
 const initApi = (req) => {
@@ -43,38 +44,22 @@ const HandleLinkResolver = (doc) => {
     return `/about`;
   }
 
-  // Define the url depending on the document type
-  //   if (doc.type === 'page') {
-  //     return '/page/' + doc.uid;
-  //   } else if (doc.type === 'blog_post') {
-  //     return '/blog/' + doc.uid;
-  //   }
-
   // Default to homepage
   return '/';
 };
 
 // Middleware to inject prismic context
 app.use((req, res, next) => {
-  //   res.locals.ctx = {
-  //     endpoint: process.env.PRISMIC_ENDPOINT,
-  //     linkResolver: HandleLinkResolver,
-  //   };
-
   res.locals.Link = HandleLinkResolver;
   res.locals.PrismicDOM = PrismicDOM;
   res.locals.Numbers = (index) => {
-    // eslint-disable-next-line eqeqeq
-    return index == 0
+    return index === 0
       ? 'One'
-      : // eslint-disable-next-line eqeqeq
-      index == 1
+      : index === 1
       ? 'Two'
-      : // eslint-disable-next-line eqeqeq
-      index == 2
+      : index === 2
       ? 'Three'
-      : // eslint-disable-next-line eqeqeq
-      index == 3
+      : index === 3
       ? 'Four'
       : '';
   };

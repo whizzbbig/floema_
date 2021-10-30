@@ -41,6 +41,7 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^10.0.0",
+    "include-media": "^1.4.10",
     "mini-css-extract-plugin": "^2.3.0",
     "nodemon": "^2.0.14",
     "postcss-loader": "^6.1.1",

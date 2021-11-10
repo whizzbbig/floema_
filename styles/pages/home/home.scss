@@ -1,28 +1,117 @@
-
 .home {
-    
+  @extend %center;
+  @extend %cover;
+
+  background: $color-contessa;
+  color: $color-white;
+  overflow: hidden;
+  text-align: center;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 24rem;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+  }
+
+  &::before {
+    background: rgb(201, 113, 100);
+    background: -moz-linear-gradient(
+      0deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      0deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    background: linear-gradient(
+      0deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c97164",endColorstr="#c97164",GradientType=1);
+    top: 0;
+  }
+
+  &::after {
+    background: rgb(201, 113, 100);
+    background: -moz-linear-gradient(
+      180deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      180deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    background: linear-gradient(
+      180deg,
+      rgba(201, 113, 100, 0) 0%,
+      rgba(201, 113, 100, 1) 94%,
+      rgba(201, 113, 100, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c97164",endColorstr="#c97164",GradientType=1);
+    bottom: 0;
+  }
 }
 .home__wrapper {
-    
 }
+
 .home__titles {
-    
+  @extend %vertical-titles;
 }
+
 .home__titles__label {
-    
+  @extend %vertical-titles__label;
 }
+
 .home__titles__title {
-    
+  @extend %vertical-titles__title;
 }
+
 .home__gallery {
-    
+  @extend %cover;
+  visibility: hidden;
 }
 .home__gallery__media {
-    
+  position: absolute;
 }
 .home__gallery__media__image {
-    
 }
 .home__link {
-    
+  @extend %description-14;
+
+  letter-spacing: 0.05;
+  width: 28.84em;
+  height: 6rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  text-transform: uppercase;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  @include media('<phone') {
+    bottom: 1rem;
+    width: 55rem;
+    height: 13.7rem;
+  }
+}
+
+.home__link__icon {
+  @extend %cover;
 }

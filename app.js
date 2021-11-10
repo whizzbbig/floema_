@@ -115,25 +115,6 @@ app.get('/about', async (req, res) => {
   });
 });
 
-app.get('/detail/:uid', async (req, res) => {
-  const api = await initApi(req);
-  const defaults = await handleRequest(api);
-
-  const meta = await api.getSingle('meta');
-  const product = await api.getByUID('product', req.params.uid, {
-    fetchLinks: 'collection.title',
-  });
-
-  if (product) {
-    res.render('pages/detail', {
-      ...defaults,
-      product,
-    });
-  } else {
-    res.status(404).render('./error_handlers/404');
-  }
-});
-
 app.get('/collections', async (req, res) => {
   const api = await initApi(req);
   const defaults = await handleRequest(api);
@@ -150,6 +131,40 @@ app.get('/collections', async (req, res) => {
     ...defaults,
     collections,
     home,
+  });
+});
+
+// app.get('/detail/:uid', async (req, res) => {
+//   const api = await initApi(req);
+//   const defaults = await handleRequest(api);
+
+//   const product = await api.getByUID('product', req.params.uid, {
+//     fetchLinks: 'collection.title',
+//   });
+
+//   if (product) {
+//     res.render('pages/detail', {
+//       product,
+//       ...defaults,
+//     });
+//   } else {
+//     res.status(404).send('Page not found');
+//   }
+// });
+
+app.get('/detail/:uid', async (req, res) => {
+  const api = await initApi(req);
+  const defaults = await handleRequest(api);
+
+  const product = await api.getByUID('product', req.params.uid, {
+    fetchLinks: 'collection.title',
+  });
+
+  console.log(product);
+
+  res.render('pages/detail', {
+    ...defaults,
+    product,
   });
 });
 

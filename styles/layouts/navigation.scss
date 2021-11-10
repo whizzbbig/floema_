@@ -1,22 +1,41 @@
-
 .navigation {
-    
+  @extend %cover;
+
+  color: $color-white;
+  z-index: z('navigation');
+  position: fixed;
+  pointer-events: none;
 }
-.navigation__wrapper {
-    
-}
+
 .navigation__link {
-    
+  font-size: 0;
+  position: absolute;
+  left: 4rem;
+  top: 4rem;
+  width: 12.8rem;
+  pointer-events: auto;
+  height: 2rem;
+
+  @include media('<phone') {
+    left: 5rem;
+    top: 5rem;
+    width: 27.9rem;
+    height: 4.3rem;
+  }
 }
 .navigation__link__icon {
-    
+  display: block;
 }
 .navigation__list {
-    
 }
 .navigation__list__item {
-
+  position: absolute;
+  right: 4rem;
+  top: 4rem;
+  pointer-events: auto;
 }
 .navigation__list__link {
-    
+  @extend %title-20;
+
+  display: block;
 }

@@ -46,6 +46,8 @@
 }
 
 .collections__gallery__media__image {
+  @extend %cover;
+
   object-fit: cover;
 }
 

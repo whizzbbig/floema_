@@ -125,8 +125,6 @@ app.get('/collections', async (req, res) => {
     { fetchLinks: 'product.image' }
   );
 
-  console.log(home.data.collection);
-
   res.render('pages/collections', {
     ...defaults,
     collections,
@@ -159,8 +157,6 @@ app.get('/detail/:uid', async (req, res) => {
   const product = await api.getByUID('product', req.params.uid, {
     fetchLinks: 'collection.title',
   });
-
-  console.log(product);
 
   res.render('pages/detail', {
     ...defaults,

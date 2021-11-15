@@ -14,7 +14,7 @@ block content
       .home__gallery
         each media in home.data.gallery
           figure.home__gallery__media
-            img.home__gallery__media__image(src=media.image.url alt=media.image.alt)
+            img.home__gallery__media__image(data-src=media.image.url alt=media.image.alt)
 
       a.home__link(href=Link(home.data.collections))=home.data.button
         svg.home__link__icon(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 60")

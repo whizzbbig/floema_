@@ -47,6 +47,7 @@
     "mini-css-extract-plugin": "^2.3.0",
     "nodemon": "^2.0.14",
     "postcss-loader": "^6.1.1",
+    "prefix": "^1.0.0",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "terser-webpack-plugin": "^5.2.4",

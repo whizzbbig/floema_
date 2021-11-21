@@ -45,7 +45,7 @@ export default class Preloader extends Component {
   }
 
   onAssetLoaded(image) {
-    this.length += 1;
+    this.length++;
 
     const percent = this.length / this.elements.images.length;
 
@@ -66,7 +66,7 @@ export default class Preloader extends Component {
         duration: 1.5,
         ease: 'expo.out',
         stagger: 0.1,
-        y: '100%',
+        y: '150%',
       });
 
       this.animateOut.to(
@@ -85,7 +85,7 @@ export default class Preloader extends Component {
         {
           duration: 1.5,
           ease: 'expo.out',
-          scale: 0,
+          scaleY: 0,
           transformOrigin: '100% 100%',
         },
         '-=1'

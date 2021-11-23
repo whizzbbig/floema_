@@ -1,14 +1,33 @@
 /* eslint-disable no-unused-vars */
 import GSAP from 'gsap';
+import NormalizeWheel from 'normalize-wheel';
+
 import Prefix from 'prefix';
 
 import each from 'lodash/each';
+import map from 'lodash/map';
+
+import Title from 'animations/Title';
+import Paragraph from 'animations/Paragraph';
+import Label from 'animations/Label';
+import Highlight from 'animations/Highlight';
+
+import AsyncLoad from 'classes/AsyncLoad';
+
+import { ColorsManager } from 'classes/Colors';
 
 export default class Page {
   constructor({ element, elements, id }) {
     this.selector = element;
     this.selectorChildren = {
       ...elements,
+
+      aimationsHighlights: '[data-animation="highlight"]',
+      animationsTitles: '[data-animation="title"]',
+      animationsParagraphs: '[data-animation="paragraph"]',
+      animationsLabels: '[data-animation="label"]',
+
+      preloaders: '[data-src]',
     };
 
     this.id = id;
@@ -46,10 +65,76 @@ export default class Page {
         }
       }
     });
+
+    this.createAnimations();
+
+    this.createPreloader();
+  }
+
+  createPreloader() {
+    this.preloaders = map(this.elements.preloaders, (element) => {
+      return new AsyncLoad({ element });
+    });
+  }
+
+  // Animations
+
+  createAnimations() {
+    this.animations = [];
+
+    // Titles
+
+    this.animationsTitles = map(this.elements.animationsTitles, (element) => {
+      return new Title({
+        element,
+      });
+    });
+
+    this.animations.push(...this.animationsTitles);
+
+    // Paragraphs
+
+    this.animationsParagraphs = map(
+      this.elements.animationsParagraphs,
+      (element) => {
+        return new Paragraph({
+          element,
+        });
+      }
+    );
+
+    this.animations.push(...this.animationsParagraphs);
+
+    // Labels
+
+    this.animationsLabels = map(this.elements.animationsLabels, (element) => {
+      return new Label({
+        element,
+      });
+    });
+
+    this.animations.push(...this.animationsLabels);
+
+    // Highlights
+
+    this.aimationsHighlights = map(
+      this.elements.aimationsHighlights,
+      (element) => {
+        return new Highlight({
+          element,
+        });
+      }
+    );
+
+    this.animations.push(...this.aimationsHighlights);
   }
 
   show() {
     return new Promise((resolve) => {
+      ColorsManager.change({
+        backgroundColor: this.element.getAttribute('data-background'),
+        color: this.element.getAttribute('data-color'),
+      });
       this.animationIn = GSAP.timeline();
 
       this.animationIn.fromTo(
@@ -72,7 +157,7 @@ export default class Page {
 
   hide() {
     return new Promise((resolve) => {
-      this.removeEventListeners();
+      this.destroy();
 
       this.animationIn = GSAP.timeline();
 
@@ -83,9 +168,11 @@ export default class Page {
     });
   }
 
+  // Events
+
   onMouseWheel(e) {
-    const { deltaY } = e;
-    this.scroll.target += deltaY;
+    const { pixelY } = NormalizeWheel(e);
+    this.scroll.target += pixelY;
   }
 
   onResize() {
@@ -93,7 +180,11 @@ export default class Page {
       this.scroll.limit =
         this.elements.wrapper.clientHeight - window.innerHeight;
     }
+
+    each(this.animations, (animation) => animation.onResize());
   }
+
+  // Loop
 
   update() {
     this.scroll.target = GSAP.utils.clamp(
@@ -119,11 +210,19 @@ export default class Page {
     }
   }
 
+  // Listeners
+
   addEventListeners() {
     window.addEventListener('mousewheel', this.onMouseWheelEvent);
   }
 
   removeEventListeners() {
     window.removeEventListener('mousewheel', this.onMouseWheelEvent);
+  }
+
+  // Destroy
+
+  destroy() {
+    this.removeEventListeners();
   }
 }

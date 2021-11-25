@@ -14,6 +14,7 @@ const port = 8004;
 const Prismic = require('@prismicio/client');
 const PrismicDOM = require('prismic-dom');
 const { application } = require('express');
+const UAParser = require('ua-parser-js');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -50,6 +51,12 @@ const HandleLinkResolver = (doc) => {
 
 // Middleware to inject prismic context
 app.use((req, res, next) => {
+  const ua = UAParser(req.headers['user-agent']);
+
+  res.locals.isDesktop = ua.device.type === undefined;
+  res.locals.isPhone = ua.device.type === 'mobile';
+  res.locals.isTablet = ua.device.type === 'tablet';
+
   res.locals.Link = HandleLinkResolver;
   res.locals.PrismicDOM = PrismicDOM;
   res.locals.Numbers = (index) => {

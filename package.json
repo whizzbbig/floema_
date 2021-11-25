@@ -66,6 +66,7 @@
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "prismic-dom": "^2.2.6",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "ua-parser-js": "^1.0.2"
   }
 }

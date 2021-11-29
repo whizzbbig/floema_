@@ -43,8 +43,6 @@ export default class Media {
     });
 
     this.mesh.setParent(this.scene);
-
-    this.mesh.scale.x = 2;
   }
 
   createBounds({ sizes }) {
@@ -69,7 +67,7 @@ export default class Media {
     this.width = this.bounds.width / window.innerWidth;
 
     this.mesh.scale.x = this.sizes.width * this.width;
-    this.mesh.scale.x = this.sizes.height * this.width;
+    this.mesh.scale.y = this.sizes.height * this.height;
   }
 
   updateX(x = 0) {

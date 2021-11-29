@@ -1,1 +1,0 @@
-{"c":["main"],"r":[],"m":["./app/components/Canvas/Media.js","./app/shaders/plane-fragment.glsl","./app/shaders/plane-vertex.glsl","./node_modules/ogl/src/core/Mesh.js","./node_modules/ogl/src/core/Program.js","./node_modules/ogl/src/core/Texture.js","./node_modules/ogl/src/math/Mat3.js","./node_modules/ogl/src/math/functions/Mat3Func.js"]}

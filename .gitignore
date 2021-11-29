@@ -1,7 +1,12 @@
-node_modules
+# logs
+yarn-debug.log*
+npm-error.log*
+
+# dependency directories
+node_modules/
 
 # webpack build output
-./public
+public/
 
 # environment variables
 .env

@@ -1,8 +1,8 @@
 import { Mesh, Program, Texture } from 'ogl';
 import GSAP from 'gsap';
 
-import vertex from '../../shaders/plane-vertex.glsl';
-import fragment from '../../shaders/plane-fragment.glsl';
+import vertex from 'shaders/plane-vertex.glsl';
+import fragment from 'shaders/plane-fragment.glsl';
 
 export default class Media {
   constructor({ element, geometry, gl, index, scene, sizes }) {
@@ -37,6 +37,7 @@ export default class Media {
       fragment,
       vertex,
       uniforms: {
+        uAlpha: { value: 0 },
         tMap: { value: this.texture },
       },
     });
@@ -62,6 +63,25 @@ export default class Media {
     this.updateY();
   }
 
+  // Animations
+  show() {
+    GSAP.fromTo(
+      this.program.uniforms.uAlpha,
+      {
+        value: 0,
+      },
+      {
+        value: 1,
+      }
+    );
+  }
+
+  hide() {
+    GSAP.to(this.program.uniforms.uAlpha, {
+      value: 0,
+    });
+  }
+
   // Events
 
   onResize(sizes, scroll) {
@@ -71,8 +91,8 @@ export default class Media {
     };
 
     this.createBounds(sizes);
-    this.updateX(scroll ? scroll.x : 0);
-    this.updateY(scroll ? scroll.y : 0);
+    this.updateX(scroll && scroll.x);
+    this.updateY(scroll && scroll.y);
   }
 
   // Loop.

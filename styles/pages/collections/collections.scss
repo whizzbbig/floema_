@@ -11,6 +11,12 @@
 
 .collections__titles {
   @extend %vertical-titles;
+
+  transition: transform 1s ease;
+
+  @include media('<phone') {
+    display: none;
+  }
 }
 
 .collections__titles__label {
@@ -23,6 +29,7 @@
 
 .collections__gallery {
   @extend %cover;
+  z-index: 1;
 }
 
 .collections__gallery__wrapper {
@@ -31,18 +38,27 @@
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-22.35rem, -50%);
+  transform: translate(-44.7rem * 0.5, -50%);
 }
 
 .collections__gallery__link {
   display: block;
   margin: 0 5.3rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .collections__gallery__media {
-  height: 50.48rem;
+  height: 63.1rem;
   position: relative;
-  width: 35.76rem;
+  width: 44.7rem;
+  visibility: hidden;
 }
 
 .collections__gallery__media__image {
@@ -64,9 +80,11 @@
   left: 8rem;
   bottom: 8rem;
   opacity: 0;
+  transition: opacity 0.4s ease;
 
   &--active {
     opacity: 1;
+    transition-delay: 0.4s;
   }
 }
 

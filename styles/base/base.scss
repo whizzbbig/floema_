@@ -51,6 +51,11 @@ img {
   }
 }
 
+canvas {
+    pointer-events: none;
+    position: relative;
+}
+
 .content {
   @extend %cover;
 }

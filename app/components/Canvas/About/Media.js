@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Mesh, Program, Texture } from 'ogl';
+import { Mesh, Program } from 'ogl';
 import GSAP from 'gsap';
 
 import Detection from 'classes/Detection';
@@ -27,14 +27,9 @@ export default class Media {
   }
 
   createTexture() {
-    this.texture = new Texture(this.gl);
-
     const image = this.element.querySelector('img');
 
-    this.image = new window.Image();
-    this.image.crossOrigin = 'anonymous';
-    this.image.src = image.getAttribute('data-src');
-    this.image.onload = (_) => (this.texture.image = this.image);
+    this.texture = window.TEXTURES[image.getAttribute('data-src')];
   }
 
   createProgram() {

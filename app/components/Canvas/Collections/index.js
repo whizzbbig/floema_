@@ -9,10 +9,13 @@ import Prefix from 'prefix';
 import Media from './Media';
 
 export default class {
-  constructor({ gl, scene, sizes }) {
+  constructor({ gl, scene, sizes, transition }) {
+    this.id = 'collections';
+
     this.gl = gl;
     this.scene = scene;
     this.sizes = sizes;
+    this.transition = transition;
 
     this.transformPrefix = Prefix('transform');
 
@@ -43,6 +46,10 @@ export default class {
     this.createGeometry();
     this.createGallery();
 
+    this.onResize({
+      sizes: this.sizes,
+    });
+
     this.group.setParent(this.scene);
 
     this.show();
@@ -66,7 +73,25 @@ export default class {
   }
 
   // Animations
-  show() {
+  async show() {
+    if (this.transition) {
+      const { src } = this.transition.mesh.program.uniforms.tMap.value.image;
+      const texture = window.TEXTURES[src];
+      const media = this.medias.find((media) => media.texture === texture);
+
+      GSAP.delayedCall(1, (_) => {
+        this.scroll.current =
+          this.scroll.target =
+          this.scroll.last =
+          this.scroll.start =
+            -media.mesh.position.x;
+
+        console.log(media.mesh.position.x, this.scroll.current);
+      });
+
+      this.transition.animate(this.medias[0].mesh, (_) => {});
+    }
+
     map(this.medias, (media) => media.show());
   }
 
@@ -123,8 +148,6 @@ export default class {
   // Update
 
   update() {
-    if (!this.bounds) return;
-
     this.scroll.target = GSAP.utils.clamp(-this.scroll.limit, 0, this.scroll.target); // prettier-ignore
 
     this.scroll.current = GSAP.utils.interpolate( this.scroll.current, this.scroll.target, this.scroll.lerp ); // prettier-ignore
@@ -139,15 +162,18 @@ export default class {
 
     this.scroll.last = this.scroll.current;
 
-    map(this.medias, (media, index) => {
-      media.update(this.scroll.current);
-    });
-
     const index = Math.floor(Math.abs(this.scroll.current / this.scroll.limit) * this.medias.length) // prettier-ignore
 
     if (this.index !== index) {
       this.onChange(index);
     }
+
+    map(this.medias, (media, index) => {
+      media.update(this.scroll.current, this.index);
+      // media.mesh.rotation.z = Math.abs(GSAP.utils.mapRange(0, 1, -0.2, 0.2, index / (this.medias.length - 1))) - 0.1
+
+      media.mesh.position.y += Math.cos((media.mesh.position.x / this.sizes.width) * Math.PI * 0.1) * 40 - 40; // prettier-ignore
+    });
   }
 
   // Destroy

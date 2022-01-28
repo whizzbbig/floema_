@@ -1,8 +1,9 @@
 .about__gallery {
   height: 70.6rem;
   position: relative;
-  margin: 0 auto;
   overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
 
   &:first-child {
     margin-bottom: 0;
@@ -22,7 +23,7 @@
 .about__gallery__media {
   position: relative;
   height: 43.7rem;
-  width: 40.9rem;
+  width: 30.9rem;
   margin: 0 4rem;
 }
 .about__gallery__media__image {

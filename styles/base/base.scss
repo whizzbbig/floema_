@@ -2,6 +2,7 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  user-select: none
 }
 
 html {
@@ -48,6 +49,12 @@ img {
   &.loaded {
     opacity: 1;
   }
+}
+
+canvas {
+    pointer-events: none;
+    position: relative;
+    z-index: z('canvas')
 }
 
 .content {

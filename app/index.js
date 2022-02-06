@@ -85,7 +85,7 @@ class App {
   onPopState() {
     this.onChange({
       url: window.location.pathname,
-      push: false,
+      push: true,
     });
   }
 

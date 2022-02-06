@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 require('dotenv').config();
 
+const fetch = require('node-fetch');
 const logger = require('morgan');
 const path = require('path');
 const express = require('express');
@@ -9,10 +10,10 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 const app = express();
-const port = 8004;
+const port = process.env.PORT || 8004;
 
 const Prismic = require('@prismicio/client');
-const PrismicDOM = require('prismic-dom');
+const PrismicH = require('@prismicio/helpers');
 const { application } = require('express');
 const UAParser = require('ua-parser-js');
 
@@ -25,9 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize the prismic.io api
 const initApi = (req) => {
-  return Prismic.client(process.env.PRISMIC_ENDPOINT, {
+  return Prismic.createClient(process.env.PRISMIC_ENDPOINT, {
     accessToken: process.env.PRISMIC_ACCESS_TOKEN,
     req,
+    fetch,
   });
 };
 
@@ -58,7 +60,7 @@ app.use((req, res, next) => {
   res.locals.isTablet = ua.device.type === 'tablet';
 
   res.locals.Link = HandleLinkResolver;
-  res.locals.PrismicDOM = PrismicDOM;
+  res.locals.PrismicH = PrismicH;
   res.locals.Numbers = (index) => {
     return index === 0
       ? 'One'
@@ -79,14 +81,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.locals.basedir = app.get('views');
 
 const handleRequest = async (api) => {
-  const meta = await api.getSingle('meta');
-  const preloader = await api.getSingle('preloader');
-  const navigation = await api.getSingle('navigation');
-  const home = await api.getSingle('home');
-  const about = await api.getSingle('about');
-  const { results: collections } = await api.query( Prismic.Predicates.at('document.type', 'collection'), { fetchLinks: 'product.image' } ); // prettier-ignore
+  const [meta, preloader, navigation, home, about, { results: collections }] =
+    await Promise.all([
+      api.getSingle('meta'),
+      api.getSingle('preloader'),
+      api.getSingle('navigation'),
+      api.getSingle('home'),
+      api.getSingle('about'),
+      api.query(Prismic.Predicates.at('document.type', 'collection'), {
+        fetchLinks: 'product.image',
+      }),
+    ]);
 
-  console.log(about, home, collections);
+  //   console.log(about, home, collections);
 
   const assets = [];
 
@@ -187,3 +194,5 @@ app.get('/detail/:uid', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+// "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\""

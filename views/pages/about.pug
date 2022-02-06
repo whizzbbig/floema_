@@ -3,7 +3,7 @@ extends ../_includes/layout
 block variables
   - var template = 'about'
 
-block content 
+block content
   .about(data-background="#b2b8c3" data-color="#37384c")
     .about__wrapper
       section.about__gallery
@@ -22,7 +22,7 @@ block content
               .about__content__box
                 p.about__content__label(data-animation="label")!=section.primary.label
 
-                .about__content__description!=PrismicDOM.RichText.asHtml(section.primary.description).replace(/<p>/g, '<p data-animation="paragraph">')
+                .about__content__description!=PrismicH.asHTML(section.primary.description).replace(/<p>/g, '<p data-animation="paragraph">')
 
               figure.about__content__media
                 img.about__content__media__image(data-src=section.primary.image.url alt=section.primary.image.alt)

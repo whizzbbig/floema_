@@ -1,7 +1,7 @@
 # Hosted and Deployed on Heroku and Vercel
 
-[Floema on Heroku](https://floema-ice.herokuapp.com)
-[Floema on Vercel](https://floema-ice.vercel.app)
+- [Floema on Heroku](https://floema-ice.herokuapp.com)
+- [Floema on Vercel](https://floema-ice.vercel.app)
 
 
 # webpack-boilerplate

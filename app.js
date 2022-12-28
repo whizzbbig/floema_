@@ -114,8 +114,8 @@ const handleRequest = async (api) => {
   });
 
   collections.forEach((collection) => {
-    collection.data.products.forEach((item) => {
-      assets.push(item.products_product.data.image.url);
+    collection.data.list.forEach((item) => {
+      assets.push(item.product.data.image.url);
     });
   });
 

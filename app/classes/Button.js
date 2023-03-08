@@ -9,8 +9,6 @@ export default class Button extends Component {
     this.path = element.querySelector('path:last-child');
     this.pathLength = this.path.getTotalLength();
 
-    console.log(this.path.getTotalLength());
-
     this.timeline = GSAP.timeline({ paused: true });
 
     this.timeline.fromTo(

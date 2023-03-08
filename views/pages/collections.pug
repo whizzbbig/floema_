@@ -22,10 +22,10 @@ block content
       .collections__gallery
         .collections__gallery__wrapper
           each collection, index in collections
-            each product in collection.data.products
-              a.collections__gallery__link(href=Link(product.products_product))
+            each product in collection.data.list
+              a.collections__gallery__link(href=Link(product.product.slug))
                 figure.collections__gallery__media(data-index=index)
-                  img.collections__gallery__media__image(data-src=product.products_product.data.image.url alt=product.products_product.data.image.alt)
+                  img.collections__gallery__media__image(data-src=product.product.data.image.url alt=product.product.data.image.alt)
 
       .collections__content
         each collection, index in collections

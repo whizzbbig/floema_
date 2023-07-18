@@ -23,7 +23,7 @@ block content
         .collections__gallery__wrapper
           each collection, index in collections
             each product in collection.data.list
-              a.collections__gallery__link(href=Link(product.product.slug))
+              a.collections__gallery__link(href='/detail/' + product.product.uid)
                 figure.collections__gallery__media(data-index=index)
                   img.collections__gallery__media__image(data-src=product.product.data.image.url alt=product.product.data.image.alt)
 
